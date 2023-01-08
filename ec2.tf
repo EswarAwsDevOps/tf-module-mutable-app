@@ -13,8 +13,9 @@ resource "aws_spot_instance_request" "rabbitmq" {
 
   user_data = <<EOF
 #!/bin/bash
+touch /opt/user-data.log
 labauto ansible
-ansible-pull -i localhost, -U https://github.com/EswarAwsDevOps/roboshop-ansible roboshop.yml -e ROLE_NAME=${var.component} -e ENV=${var.env}
+ansible-pull -i localhost, -U https://github.com/EswarAwsDevOps/roboshop-ansible roboshop.yml -e ROLE_NAME=${var.component} -e ENV=${var.env} | tee -a /opt/user-data.log
 EOF
 }
 resource "aws_ec2_tag" "name-tag" {
