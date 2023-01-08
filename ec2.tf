@@ -3,7 +3,7 @@ resource "aws_spot_instance_request" "rabbitmq" {
   ami           = data.aws_ami.centos8.id
   instance_type = var.instance_type
   subnet_id = element(local.app_subnets_ids[0]
-  vpc_security_group_ids = [aws_security_group.allow_app.id]
+  vpc_security_group_ids = [aws_security_group, allow_app.id]
   wait_for_fulfillment = true
 
   tags = {
